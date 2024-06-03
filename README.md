@@ -27,7 +27,7 @@ O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptogr
         string hashedText = crypto.Encrypt("Texto a ser hashado");
         
         // Verificar se um texto simples corresponde a um hash
-        bool isMatch = crypto.IsEquals("Texto a ser verificado", hashedText);
+        bool isMatch = crypto.Verify("Texto a ser verificado", hashedText);
       ```
 
   3. Exemplo de Uso Modo 2:
@@ -60,7 +60,7 @@ O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptogr
                 string hashedText = crypto.Encrypt("Texto a ser hashado");
   
                // Verificar se um texto simples corresponde a um hash
-                bool isMatch = crypto.IsEquals("Texto a ser verificado", hashedText);
+                bool isMatch = crypto.Verify("Texto a ser verificado", hashedText);
             }
         }        
       ```
