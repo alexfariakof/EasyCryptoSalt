@@ -126,7 +126,7 @@ public class Crypto : ICrypto
     /// <param name="plainText">Texto simples a ser verificado.</param>
     /// <param name="hash">Hash para comparação.</param>
     /// <returns>True se o texto simples gerar o mesmo hash; caso contrário, false.</returns>
-    public bool IsEquals(string plainText, string hash)
+    public bool Verify(string plainText, string hash)
     {
         byte[] hashWithSaltBytes = Convert.FromBase64String(hash);
         byte[] salt = new byte[_authSalt.Length];

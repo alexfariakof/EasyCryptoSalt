@@ -18,5 +18,5 @@ public interface ICrypto
     /// <param name="plainText">Texto simples a ser verificado.</param>
     /// <param name="hash">Hash para comparação.</param>
     /// <returns>True se o texto simples gerar o mesmo hash; caso contrário, false.</returns>
-    bool IsEquals(string plainText, string hash);
+    bool Verify(string plainText, string hash);
 }
