@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34728.123
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyCryptoSalt", "EasyCryptoSalt\EasyCryptoSalt.csproj", "{EBB92F78-74A8-4EC2-AB3B-2E003BBDD22E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EasyCryptoSalt.UnitTest", "EasyCryptoSalt.UnitTest\EasyCryptoSalt.UnitTest.csproj", "{341DB3A5-FFF4-4D78-AAF6-7B2DE5A47E01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EBB92F78-74A8-4EC2-AB3B-2E003BBDD22E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBB92F78-74A8-4EC2-AB3B-2E003BBDD22E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBB92F78-74A8-4EC2-AB3B-2E003BBDD22E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBB92F78-74A8-4EC2-AB3B-2E003BBDD22E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{341DB3A5-FFF4-4D78-AAF6-7B2DE5A47E01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{341DB3A5-FFF4-4D78-AAF6-7B2DE5A47E01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{341DB3A5-FFF4-4D78-AAF6-7B2DE5A47E01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{341DB3A5-FFF4-4D78-AAF6-7B2DE5A47E01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0B16D82B-4018-4D3B-B9AD-E3D7B85F68E7}
+	EndGlobalSection
+EndGlobal
