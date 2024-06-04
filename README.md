@@ -70,8 +70,8 @@ O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptogr
   * Certifique-se de configurar corretamente a chave e o salt no arquivo de configuração appsettings.json para garantir a segurança adequada dos hashes gerados.
     ```json
      "CryptoConfigurations": {
-       "Key": "exemplo de Chave ",
-       "AuthSalt": "exemplo de Auth salt"
+       "Key": "exemplo de Chave `^AOUWNW16h*634+=tq51#2fa8091$2jnsais71298>shsady|==",
+       "AuthSalt": "exemplo de Auth salt ``àadskldjlskjdlk\gwt257__1816!?}[oap725-1%"
      }
     ```
   * Esta biblioteca é projetada para ser fácil de usar e oferecer segurança robusta para suas necessidades criptográficas em .NET.
