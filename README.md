@@ -33,7 +33,7 @@ O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptogr
   3. Exemplo de Uso Modo 2:
 
       ```csharp
-       #program.cs
+       //program.cs
          using EasyCryptoSalt;
       
          var builder = WebApplication.CreateBuilder(args);
@@ -43,7 +43,7 @@ O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptogr
          var app = builder.Build();      
          app.Run();
       
-        #ExampleClass.cs 
+        //ExampleClass.cs 
         using EasyCryptoSalt;
       
         public class ExampleClass
