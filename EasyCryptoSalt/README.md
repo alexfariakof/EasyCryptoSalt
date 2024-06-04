@@ -11,13 +11,13 @@ O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptogr
   1. Instalação:
 
      Instale o pacote NuGet EasyCryptoSalt em seu projeto:
-      ```
+      ```powershell
       Install-Package EasyCryptoSalt
       ```
 
   2. Exemplo de Uso Modo 1:
 
-      ```  
+      ```csharp  
         using EasyCryptoSalt;
         
         // Criar uma instância de Crypto
@@ -27,12 +27,12 @@ O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptogr
         string hashedText = crypto.Encrypt("Texto a ser hashado");
         
         // Verificar se um texto simples corresponde a um hash
-        bool isMatch = crypto.IsEquals("Texto a ser verificado", hashedText);
+        bool isMatch = crypto.Verify("Texto a ser verificado", hashedText);
       ```
 
   3. Exemplo de Uso Modo 2:
 
-      ```
+      ```csharp
        #program.cs
          using EasyCryptoSalt;
       
@@ -60,7 +60,7 @@ O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptogr
                 string hashedText = crypto.Encrypt("Texto a ser hashado");
   
                // Verificar se um texto simples corresponde a um hash
-                bool isMatch = crypto.IsEquals("Texto a ser verificado", hashedText);
+                bool isMatch = crypto.Verify("Texto a ser verificado", hashedText);
             }
         }        
       ```
@@ -68,7 +68,7 @@ O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptogr
 
 ## Observações:
   * Certifique-se de configurar corretamente a chave e o salt no arquivo de configuração appsettings.json para garantir a segurança adequada dos hashes gerados.
-    ```
+    ```json
      "CryptoConfigurations": {
        "Key": "exemplo de Chave ",
        "AuthSalt": "exemplo de Auth salt"
