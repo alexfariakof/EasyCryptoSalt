@@ -8,7 +8,7 @@ namespace EasyCryptoSalt;
 /// <summary>
 /// Classe responsável por operações criptográficas, incluindo hashing com SHA-256 e comparação de hashes utilizando uma chave e um salt.
 /// </summary>
-public class Crypto : ICrypto
+public sealed class Crypto : ICrypto
 {
     private readonly byte[] _key; // SECURE_AUTH_KEY
     private readonly byte[] _authSalt; // SECURE_AUTH_SALT
