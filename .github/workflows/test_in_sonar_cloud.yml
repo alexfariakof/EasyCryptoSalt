@@ -59,7 +59,7 @@ jobs:
             dotnet tool install -g dotnet-reportgenerator-globaltool
 
             $projectPath = Get-Location
-            $projectTestPath = Join-Path -Path (Get-Location) -ChildPath "EasyCryptoSalt.UnitTest"
+            $projectTestPath = Join-Path -Path (Get-Location) -ChildPath "../EasyCryptoSalt.UnitTest"
             $sourceDirs = "$projectPath\EasyCryptoSalt;"
             $reportPath = Join-Path -Path $projectTestPath -ChildPath "TestResults"
             $coverageXmlPath = Join-Path -Path (Join-Path -Path $projectTestPath -ChildPath "TestResults") -ChildPath "coveragereport"          
