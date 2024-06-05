@@ -17,42 +17,51 @@ on:
 
 permissions:
     contents: read 
+
 jobs:
-  build:
-    name: Test Code in Sonar Cloud
+  test_code_in_sonar:
+    name: Test and Analysis Code In Sonar Cloud
     runs-on: windows-latest
     steps:
-
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
+          distribution: 'zulu'
+      
       - uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+          fetch-depth: 0
 
       - name: Cache SonarCloud packages
-        uses: actions/cache@v3
-        with:
-          path: ~\sonar\cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
+        id: cache-sonar
+        uses: actions/cache@v3        
+        with:        
+            path: ~\sonar\cache
+            key: ${{ runner.os }}-sonar
+            restore-keys: ${{ runner.os }}-sonar
+      
+      - name: Create if not Exist Cache Sonar Packages
+        if: steps.cache-sonar.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          New-Item -Path ~\sonar\cache -ItemType Directory    
+        
       - name: Cache SonarCloud scanner
         id: cache-sonar-scanner
         uses: actions/cache@v3
         with:
-          path: .\.sonar\scanner
-          key: ${{ runner.os }}-sonar-scanner
-          restore-keys: ${{ runner.os }}-sonar-scanner
-
+            path: .\.sonar\scanner
+            key: ${{ runner.os }}-sonar-scanner
+            restore-keys: ${{ runner.os }}-sonar-scanner      
+          
+      
       - name: Install SonarCloud scanner
         if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
         shell: powershell
         run: |
-          New-Item -Path .\.sonar\scanner -ItemType Directory
-          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+          New-Item -Path ./.sonar/scanner -ItemType Directory
+          dotnet tool update dotnet-sonarscanner --tool-path ./.sonar/scanner
 
       - name: Build and analyze
         env:
@@ -60,14 +69,12 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"alexfariakof_EasyCryptoSalt" /o:"alexfariakof" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="**/EasyCryptoSalt.UnitTest/**"  /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" /d:sonar.cs.lcov.reportPaths="**/TestResults/coveragereport/lcov.info" 
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"alexfariakof_EasyCryptoSalt" /o:"alexfariakof" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" /d:sonar.cs.lcov.reportPaths="**/lcov.info"
+            $projectTestPath = Join-Path -Path (Get-Location) -ChildPath "EasyCryptoSalt.UnitTest" 
+            $sourceDirs = Join-Path -Path (Get-Location) -ChildPath "EasyCryptoSalt;"
+
             dotnet tool install -g dotnet-reportgenerator-globaltool
+            dotnet test .\EasyCryptoSalt.UnitTest\EasyCryptoSalt.UnitTest.csproj --results-directory $projectTestPath /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"
+            reportgenerator -reports:$projectTestPath\coverage.cobertura.xml -targetdir:$projectTestPath -reporttypes:"lcov;" -sourcedirs:$sourceDirs
 
-            $baseDirectory = Get-Location
-            $projectTestPath = Join-Path -Path (Get-Location) -ChildPath "EasyCryptoSalt.UnitTest"
-            $sourceDirs = "$baseDirectory\EasyCryptoSalt;"
-            $coverageXmlPath = Join-Path -Path (Join-Path -Path $projectTestPath -ChildPath "TestResults") -ChildPath "coveragereport"          
-
-            dotnet test ./EasyCryptoSalt.UnitTest/EasyCryptoSalt.UnitTest.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"
-            reportgenerator -reports:$projectTestPath\coverage.cobertura.xml -targetdir:$coverageXmlPath -reporttypes:"Html;lcov;" -sourcedirs:$sourceDirs
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

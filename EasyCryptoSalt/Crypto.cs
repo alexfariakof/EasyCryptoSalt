@@ -52,18 +52,18 @@ public sealed class Crypto : ICrypto
     /// <param name="options">Opções de configuração para Crypto.</param>
     public Crypto(IOptions<CryptoOptions> options)
     {
-        var key = options?.Value?.Key ?? throw new ArgumentNullException("Key Auth not defined.");
+        var key = options.Value.Key ?? throw new ArgumentNullException("Key Auth not defined.");
         var keyByte = Encoding.UTF8.GetBytes(key);
         this._key = keyByte;
-        var authSalt = options?.Value?.AuthSalt ?? throw new ArgumentNullException("Key Auth Salt not defined.");
-        this._authSalt = Encoding.UTF8.GetBytes(authSalt); ;
+        var authSalt = options.Value.AuthSalt ?? throw new ArgumentNullException("Key Auth Salt not defined.");
+        this._authSalt = Encoding.UTF8.GetBytes(authSalt);
     }
 
     /// <summary>
     /// Cria a chave de hash a partir do arquivo de configuração appsettings.json.
     /// </summary>
     /// <returns>Chave de hash como string Base64.</returns>
-    private string GetHashKey()
+    private static string GetHashKey()
     {
         var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
         if (File.Exists(jsonFilePath))
@@ -80,7 +80,7 @@ public sealed class Crypto : ICrypto
     /// Cria o salt a partir do arquivo de configuração appsettings.json.
     /// </summary>
     /// <returns>Salt como string.</returns>
-    private string GetAuthSalt()
+    private static string GetAuthSalt()
     {
         var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
         if (File.Exists(jsonFilePath))
