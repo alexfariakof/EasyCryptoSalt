@@ -19,7 +19,7 @@ permissions:
     contents: read 
 jobs:
   build:
-    name: Build and analyze
+    name: Test Code in Sonar Cloud
     runs-on: windows-latest
     steps:
       - name: Set up JDK 17
@@ -61,9 +61,8 @@ jobs:
             $baseDirectory = Join-Path -Path (Get-Location) -ChildPath ""
             $projectTestPath = Join-Path -Path (Get-Location) -ChildPath "EasyCryptoSalt.UnitTest"
             $sourceDirs = "$baseDirectory\EasyCryptoSalt;"
-            $reportPath = Join-Path -Path $projectTestPath -ChildPath "TestResults"
             $coverageXmlPath = Join-Path -Path (Join-Path -Path $projectTestPath -ChildPath "TestResults") -ChildPath "coveragereport"          
 
-            dotnet test ./EasyCryptoSalt.UnitTest/EasyCryptoSalt.UnitTest.csproj --configuration Release --results-directory $reportPath /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"
-            reportgenerator -reports:$projectTestPath\coverage.cobertura.xml -targetdir:$coverageXmlPath -reporttypes:"Html;lcov;" -sourcedirs:$sourceDirs
+            dotnet test ./EasyCryptoSalt.UnitTest/EasyCryptoSalt.UnitTest.csproj --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"
+            reportgenerator -reports:$projectTestPath\coverage.cobertura.xml -targetdir:$coverageXmlPath -reporttypes:"lcov;" -sourcedirs:$sourceDirs
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
