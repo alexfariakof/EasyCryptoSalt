@@ -56,7 +56,14 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"alexfariakof_EasyCryptoSalt" /o:"alexfariakof" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="**/EasyCryptoSalt.UnitTest/**"  /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" /d:sonar.cs.lcov.reportPaths="**/TestResults/coveragereport/lcov.info" 
-          dotnet tool install -g dotnet-reportgenerator-globaltool
-          dotnet test ./EasyCryptoSalt.UnitTest.csproj --configuration Release --results-directory $reportPath /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover" --no-restore --no-build > $null 2>&1
-          reportgenerator -reports:$projectTestPath\coverage.cobertura.xml -targetdir:$coverageXmlPath -reporttypes:"Html;lcov;" -sourcedirs:$sourceDirs
+            dotnet tool install -g dotnet-reportgenerator-globaltool
+            
+            $projectTestPath = Get-Location
+            $projectPath =  (Resolve-Path -Path ..).Path
+            $sourceDirs = "$projectPath\EasyCryptoSalt;"
+            $reportPath = Join-Path -Path $projectTestPath -ChildPath "TestResults"
+            $coverageXmlPath = Join-Path -Path (Join-Path -Path $projectTestPath -ChildPath "TestResults") -ChildPath "coveragereport"          
+            
+            dotnet test ./EasyCryptoSalt.UnitTest.csproj --configuration Release --results-directory $reportPath /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover" --no-restore --no-build > $null 2>&1
+            reportgenerator -reports:$projectTestPath\coverage.cobertura.xml -targetdir:$coverageXmlPath -reporttypes:"Html;lcov;" -sourcedirs:$sourceDirs
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
