@@ -57,9 +57,9 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"alexfariakof_EasyCryptoSalt" /o:"alexfariakof" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="**/EasyCryptoSalt.UnitTest/**"  /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" /d:sonar.cs.lcov.reportPaths="**/TestResults/coveragereport/lcov.info" 
             dotnet tool install -g dotnet-reportgenerator-globaltool
-            
-            $projectTestPath = Get-Location
-            $projectPath =  (Resolve-Path -Path ..).Path
+
+            $projectPath = Get-Location
+            $projectTestPath = Join-Path -Path (Get-Location) -ChildPath "EasyCryptoSalt"
             $sourceDirs = "$projectPath\EasyCryptoSalt;"
             $reportPath = Join-Path -Path $projectTestPath -ChildPath "TestResults"
             $coverageXmlPath = Join-Path -Path (Join-Path -Path $projectTestPath -ChildPath "TestResults") -ChildPath "coveragereport"          
