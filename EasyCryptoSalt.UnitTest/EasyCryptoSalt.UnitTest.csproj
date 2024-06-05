@@ -3,14 +3,12 @@
 		<TargetFramework>net8.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-
 		<IsPackable>false</IsPackable>
 		<IsTestProject>true</IsTestProject>
 	</PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Bogus" Version="35.5.1" />
-		<PackageReference Include="coverlet.collector" Version="6.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
@@ -43,7 +41,7 @@
 	<Target Name="Test" BeforeTargets="Build;Rebuild" DependsOnTargets="$(TestDependsOn)" />
 	<Target Name="BeforeTest">
 		<!-- Check if OS is Windows -->
-		<Exec Condition=" '$(OS)' == 'Windows_NT'" Command="powershell -File ./coverage_report.ps1" />
+		<Exec Condition=" '$(Configuration)' == 'Debug' And '$(OS)' == 'Windows_NT'" Command="powershell -File ./coverage_report.ps1" />
 	</Target>
 
 </Project>
