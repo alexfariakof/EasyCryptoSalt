@@ -64,6 +64,6 @@ jobs:
             $reportPath = Join-Path -Path $projectTestPath -ChildPath "TestResults"
             $coverageXmlPath = Join-Path -Path (Join-Path -Path $projectTestPath -ChildPath "TestResults") -ChildPath "coveragereport"          
 
-            dotnet test $baseDirectory\EasyCryptoSalt.UnitTest.csproj --configuration Release --results-directory $reportPath /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"
+            dotnet test ./EasyCryptoSalt.UnitTest/EasyCryptoSalt.UnitTest.csproj --configuration Release --results-directory $reportPath /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"
             reportgenerator -reports:$projectTestPath\coverage.cobertura.xml -targetdir:$coverageXmlPath -reporttypes:"Html;lcov;" -sourcedirs:$sourceDirs
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
