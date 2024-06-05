@@ -69,13 +69,12 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"alexfariakof_EasyCryptoSalt" /o:"alexfariakof" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="**/__mock__/**, **/*Test.cs"  /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" /d:sonar.cs.lcov.reportPaths="**/TestResults/coveragereport/lcov.info"
-            dotnet tool install -g dotnet-reportgenerator-globaltool
-            dotnet test .\EasyCryptoSalt.UnitTest\EasyCryptoSalt.UnitTest.csproj --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"
-
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"alexfariakof_EasyCryptoSalt" /o:"alexfariakof" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="**/__mock__/**, **/*Test.cs"  /d:sonar.cs.opencover.reportsPaths="**/**/coverage.opencover.xml" /d:sonar.cs.lcov.reportPaths="**/lcov.info"
             $projectTestPath = Join-Path -Path (Get-Location) -ChildPath "EasyCryptoSalt.UnitTest" 
             $sourceDirs = Join-Path -Path (Get-Location) -ChildPath "EasyCryptoSalt;"
-            $coverageXmlPath = Join-Path -Path (Join-Path -Path $projectTestPath -ChildPath "TestResults") -ChildPath "coveragereport"
-            reportgenerator -reports:$projectTestPath\coverage.cobertura.xml -targetdir:$coverageXmlPath -reporttypes:"lcov;" -sourcedirs:$sourceDirs
+
+            dotnet tool install -g dotnet-reportgenerator-globaltool
+            dotnet test .\EasyCryptoSalt.UnitTest\EasyCryptoSalt.UnitTest.csproj --configuration Release --results-directory $projectTestPath /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"
+            reportgenerator -reports:$projectTestPath\coverage.cobertura.xml -targetdir:$projectTestPath -reporttypes:"lcov;" -sourcedirs:$sourceDirs
 
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
