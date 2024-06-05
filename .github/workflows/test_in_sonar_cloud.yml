@@ -58,12 +58,12 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"alexfariakof_EasyCryptoSalt" /o:"alexfariakof" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="**/EasyCryptoSalt.UnitTest/**"  /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" /d:sonar.cs.lcov.reportPaths="**/TestResults/coveragereport/lcov.info" 
             dotnet tool install -g dotnet-reportgenerator-globaltool
 
-            $projectPath = Get-Location
-            $projectTestPath = Join-Path -Path ((Resolve-Path -Path ..).Path) -ChildPath "EasyCryptoSalt.UnitTest"
-            $sourceDirs = "$projectPath\EasyCryptoSalt;"
+            $baseDirectory = Join-Path -Path (Get-Location) -ChildPath ""
+            $projectTestPath = Join-Path -Path (Get-Location) -ChildPath "EasyCryptoSalt.UnitTest"
+            $sourceDirs = "$baseDirectory\EasyCryptoSalt;"
             $reportPath = Join-Path -Path $projectTestPath -ChildPath "TestResults"
             $coverageXmlPath = Join-Path -Path (Join-Path -Path $projectTestPath -ChildPath "TestResults") -ChildPath "coveragereport"          
 
-            dotnet test $projectTestPath\EasyCryptoSalt.UnitTest.csproj --configuration Release --results-directory $reportPath /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"
+            dotnet test $baseDirectory\EasyCryptoSalt.UnitTest.csproj --configuration Release --results-directory $reportPath /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"
             reportgenerator -reports:$projectTestPath\coverage.cobertura.xml -targetdir:$coverageXmlPath -reporttypes:"Html;lcov;" -sourcedirs:$sourceDirs
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
