@@ -25,7 +25,6 @@ $coverageXmlPath = Join-Path -Path (Join-Path -Path $projectTestPath -ChildPath 
 
  } 
 
-
 dotnet test ./EasyCryptoSalt.UnitTest.csproj --results-directory $reportPath /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover" --no-restore --no-build > $null 2>&1
 reportgenerator -reports:$projectTestPath\coverage.cobertura.xml -targetdir:$coverageXmlPath -reporttypes:"Html;lcov;" -sourcedirs:$sourceDirs > $null 2>&1
 Wait-TestResults
