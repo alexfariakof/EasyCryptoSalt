@@ -1,9 +1,9 @@
 name: Test and Analysis Code In Sonar Cloud
 on:
   workflow_call:
+
   push:
     branches: 
-      - main 
       - hotfix/*
       - feature/*
       - bugfix/*  
