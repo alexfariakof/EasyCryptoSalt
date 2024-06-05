@@ -27,8 +27,8 @@ public sealed class CryptoTest
         ICrypto crypto = Crypto.Instance;
 
         // Act
-        string encryptedText = crypto.Encrypt(originalText);
-        var isEquals = crypto.Verify(originalText, encryptedText);
+        string encryptedText = crypto.Encrypt(originalText).Result;
+        var isEquals = crypto.Verify(originalText, encryptedText).Result;
 
         // Assert
         Assert.NotEqual(originalText, encryptedText);
@@ -43,8 +43,8 @@ public sealed class CryptoTest
         ICrypto crypto = new Crypto(_cryptoOptions);
 
         // Act
-        string encryptedText = crypto.Encrypt(originalText);
-        var isEquals = crypto.Verify(originalText, encryptedText);
+        string encryptedText = crypto.Encrypt(originalText).Result;
+        var isEquals = crypto.Verify(originalText, encryptedText).Result;
 
         // Assert
         Assert.NotEqual(originalText, encryptedText);
@@ -59,8 +59,8 @@ public sealed class CryptoTest
         ICrypto crypto = Crypto.Instance;
 
         // Act
-        string encryptedText1 = crypto.Encrypt(originalText);
-        string encryptedText2 = crypto.Encrypt(originalText);
+        string encryptedText1 = crypto.Encrypt(originalText).Result;
+        string encryptedText2 = crypto.Encrypt(originalText).Result;
 
         // Assert
         Assert.NotEqual(encryptedText1, encryptedText2);
@@ -74,8 +74,8 @@ public sealed class CryptoTest
         ICrypto crypto = new Crypto(_cryptoOptions);
 
         // Act
-        string encryptedText1 = crypto.Encrypt(originalText);
-        string encryptedText2 = crypto.Encrypt(originalText);
+        string encryptedText1 = crypto.Encrypt(originalText).Result;
+        string encryptedText2 = crypto.Encrypt(originalText).Result;
 
         // Assert
         Assert.NotEqual(encryptedText1, encryptedText2);
@@ -89,8 +89,8 @@ public sealed class CryptoTest
         ICrypto crypto = Crypto.Instance;
 
         // Act
-        string encryptedText = crypto.Encrypt(originalText);
-        var isEquals = crypto.Verify(originalText, encryptedText);
+        string encryptedText = crypto.Encrypt(originalText).Result;
+        var isEquals = crypto.Verify(originalText, encryptedText).Result;
 
         // Assert
         Assert.True(isEquals);
@@ -104,8 +104,8 @@ public sealed class CryptoTest
         ICrypto crypto = new Crypto(_cryptoOptions);
 
         // Act
-        string encryptedText = crypto.Encrypt(originalText);
-        var isEquals = crypto.Verify(originalText, encryptedText);
+        string encryptedText = crypto.Encrypt(originalText).Result;
+        var isEquals = crypto.Verify(originalText, encryptedText).Result;
 
         // Assert
         Assert.True(isEquals);
@@ -120,10 +120,10 @@ public sealed class CryptoTest
         ICrypto cryptoOptions = new Crypto(_cryptoOptions);
 
         // Act
-        string encryptedTextInstance = crypto.Encrypt(originalText);
+        string encryptedTextInstance = crypto.Encrypt(originalText).Result;
 
-        var isEquals = crypto.Verify(originalText, encryptedTextInstance);
-        var isEqualsOptions = cryptoOptions.Verify(originalText, encryptedTextInstance);
+        var isEquals = crypto.Verify(originalText, encryptedTextInstance).Result;
+        var isEqualsOptions = cryptoOptions.Verify(originalText, encryptedTextInstance).Result;
 
         // Assert
         Assert.True(isEquals);
@@ -138,8 +138,8 @@ public sealed class CryptoTest
         ICrypto crypto = Crypto.Instance;
 
         // Act
-        string encryptedText = crypto.Encrypt(originalText);
-        var isEquals = crypto.Verify(originalText, encryptedText);
+        string encryptedText = crypto.Encrypt(originalText).Result;
+        var isEquals = crypto.Verify(originalText, encryptedText).Result;
 
         // Assert
         Assert.NotEqual(originalText, encryptedText);
@@ -154,8 +154,8 @@ public sealed class CryptoTest
         ICrypto crypto = new Crypto(_cryptoOptions);
 
         // Act
-        string encryptedText = crypto.Encrypt(originalText);
-        var isEquals = crypto.Verify(originalText, encryptedText);
+        string encryptedText = crypto.Encrypt(originalText).Result;
+        var isEquals = crypto.Verify(originalText, encryptedText).Result;
 
         // Assert
         Assert.NotEqual(originalText, encryptedText);

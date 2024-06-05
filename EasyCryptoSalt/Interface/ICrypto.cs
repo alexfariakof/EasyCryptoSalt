@@ -10,7 +10,7 @@ public interface ICrypto
     /// </summary>
     /// <param name="input">Texto a ser hashado.</param>
     /// <returns>Hash com salt em formato Base64.</returns>
-    string Encrypt(string input);
+    Task<string> Encrypt(string input);
 
     /// <summary>
     /// Verifica se o texto simples fornecido corresponde ao hash fornecido.
@@ -18,5 +18,5 @@ public interface ICrypto
     /// <param name="plainText">Texto simples a ser verificado.</param>
     /// <param name="hash">Hash para comparação.</param>
     /// <returns>True se o texto simples gerar o mesmo hash; caso contrário, false.</returns>
-    bool Verify(string plainText, string hash);
+    Task<bool> Verify(string plainText, string hash);
 }

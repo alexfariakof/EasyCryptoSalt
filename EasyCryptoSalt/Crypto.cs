@@ -98,26 +98,29 @@ public sealed class Crypto : ICrypto
     /// </summary>
     /// <param name="input">Texto a ser hashado.</param>
     /// <returns>Hash com salt em formato Base64.</returns>
-    public string Encrypt(string input)
+    public async Task<string> Encrypt(string input)
     {
-        byte[] salt = GenerateSalt();
-        byte[] inputBytes = Encoding.UTF8.GetBytes(input);
-        byte[] inputWithSaltBytes = new byte[inputBytes.Length + salt.Length];
-        Buffer.BlockCopy(salt, 0, inputWithSaltBytes, 0, salt.Length);
-        Buffer.BlockCopy(inputBytes, 0, inputWithSaltBytes, salt.Length, inputBytes.Length);
-        byte[] keyWithSaltBytes = new byte[_key.Length + _authSalt.Length];
-        Buffer.BlockCopy(_key, 0, keyWithSaltBytes, 0, _key.Length);
-        Buffer.BlockCopy(_authSalt, 0, keyWithSaltBytes, _key.Length, _authSalt.Length);
-
-        using (SHA256 sha256 = SHA256.Create())
+        return await Task.Run(() =>
         {
-            byte[] hashBytes = sha256.ComputeHash(inputWithSaltBytes);
-            byte[] hashWithSaltBytes = new byte[salt.Length + hashBytes.Length];
-            Buffer.BlockCopy(salt, 0, hashWithSaltBytes, 0, salt.Length);
-            Buffer.BlockCopy(hashBytes, 0, hashWithSaltBytes, salt.Length, hashBytes.Length);
+            byte[] salt = GenerateSalt();
+            byte[] inputBytes = Encoding.UTF8.GetBytes(input);
+            byte[] inputWithSaltBytes = new byte[inputBytes.Length + salt.Length];
+            Buffer.BlockCopy(salt, 0, inputWithSaltBytes, 0, salt.Length);
+            Buffer.BlockCopy(inputBytes, 0, inputWithSaltBytes, salt.Length, inputBytes.Length);
+            byte[] keyWithSaltBytes = new byte[_key.Length + _authSalt.Length];
+            Buffer.BlockCopy(_key, 0, keyWithSaltBytes, 0, _key.Length);
+            Buffer.BlockCopy(_authSalt, 0, keyWithSaltBytes, _key.Length, _authSalt.Length);
 
-            return Convert.ToBase64String(hashWithSaltBytes);
-        }
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] hashBytes = sha256.ComputeHash(inputWithSaltBytes);
+                byte[] hashWithSaltBytes = new byte[salt.Length + hashBytes.Length];
+                Buffer.BlockCopy(salt, 0, hashWithSaltBytes, 0, salt.Length);
+                Buffer.BlockCopy(hashBytes, 0, hashWithSaltBytes, salt.Length, hashBytes.Length);
+
+                return Convert.ToBase64String(hashWithSaltBytes);
+            }
+        });
     }
 
     /// <summary>
@@ -126,26 +129,29 @@ public sealed class Crypto : ICrypto
     /// <param name="plainText">Texto simples a ser verificado.</param>
     /// <param name="hash">Hash para comparação.</param>
     /// <returns>True se o texto simples gerar o mesmo hash; caso contrário, false.</returns>
-    public bool Verify(string plainText, string hash)
+    public async Task<bool> Verify(string plainText, string hash)
     {
-        byte[] hashWithSaltBytes = Convert.FromBase64String(hash);
-        byte[] salt = new byte[_authSalt.Length];
-        byte[] storedHashBytes = new byte[hashWithSaltBytes.Length - salt.Length];
-        Buffer.BlockCopy(hashWithSaltBytes, 0, salt, 0, salt.Length);
-        Buffer.BlockCopy(hashWithSaltBytes, salt.Length, storedHashBytes, 0, storedHashBytes.Length);
-        byte[] inputBytes = Encoding.UTF8.GetBytes(plainText);
-        byte[] inputWithSaltBytes = new byte[inputBytes.Length + salt.Length];
-        Buffer.BlockCopy(salt, 0, inputWithSaltBytes, 0, salt.Length);
-        Buffer.BlockCopy(inputBytes, 0, inputWithSaltBytes, salt.Length, inputBytes.Length);
-        byte[] keyWithSaltBytes = new byte[_key.Length + _authSalt.Length];
-        Buffer.BlockCopy(_key, 0, keyWithSaltBytes, 0, _key.Length);
-        Buffer.BlockCopy(_authSalt, 0, keyWithSaltBytes, _key.Length, _authSalt.Length);
-
-        using (SHA256 sha256 = SHA256.Create())
+        return await Task.Run(() =>
         {
-            byte[] computedHashBytes = sha256.ComputeHash(inputWithSaltBytes);
-            return computedHashBytes.SequenceEqual(storedHashBytes);
-        }
+            byte[] hashWithSaltBytes = Convert.FromBase64String(hash);
+            byte[] salt = new byte[_authSalt.Length];
+            byte[] storedHashBytes = new byte[hashWithSaltBytes.Length - salt.Length];
+            Buffer.BlockCopy(hashWithSaltBytes, 0, salt, 0, salt.Length);
+            Buffer.BlockCopy(hashWithSaltBytes, salt.Length, storedHashBytes, 0, storedHashBytes.Length);
+            byte[] inputBytes = Encoding.UTF8.GetBytes(plainText);
+            byte[] inputWithSaltBytes = new byte[inputBytes.Length + salt.Length];
+            Buffer.BlockCopy(salt, 0, inputWithSaltBytes, 0, salt.Length);
+            Buffer.BlockCopy(inputBytes, 0, inputWithSaltBytes, salt.Length, inputBytes.Length);
+            byte[] keyWithSaltBytes = new byte[_key.Length + _authSalt.Length];
+            Buffer.BlockCopy(_key, 0, keyWithSaltBytes, 0, _key.Length);
+            Buffer.BlockCopy(_authSalt, 0, keyWithSaltBytes, _key.Length, _authSalt.Length);
+
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] computedHashBytes = sha256.ComputeHash(inputWithSaltBytes);
+                return computedHashBytes.SequenceEqual(storedHashBytes);
+            }
+        });
     }
 
     /// <summary>
