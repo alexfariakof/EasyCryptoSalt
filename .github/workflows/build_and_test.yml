@@ -1,0 +1,49 @@
+name: Build and Test
+on:
+  push:
+    branches: 
+      - main 
+      - develop
+ 
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:       
+      - main
+
+permissions:
+    contents: read 
+jobs:
+  build_and_test_net:
+    name: Build and Test .Net App
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Cache .NET packages    
+      uses: actions/cache@v3
+      id: dotnet-cache
+      with:
+        path: ~/.nuget/packages
+        key: dotnet-packages-${{ github.repository }}
+        restore-keys: dotnet-packages-${{ github.repository }}
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      if: steps.dotnet-cache.outputs.cache-hit != 'true'
+      with:
+        dotnet-version: 8.0.x   
+
+    - name: Build and Restore App 
+      run: dotnet build  ./EasyCryptoSalt/EasyCryptoSalt.csproj --restore
+      continue-on-error: false
+
+    - name: Test .Net App
+      run: | 
+          dotnet test ./EasyCryptoSalt.UnitTest/EasyCryptoSalt.UnitTest.csproj --configuration Release 
+      continue-on-error: false
+
+  trigger_tests_sonarcloud:
+    needs: build_and_test_net
+    name: Triggered Test Code In Sonar Cloud
+    uses: alexfariakof/EasyCryptoSalt/.github/workflows/test_in_sonar_cloud.yml@main
+    secrets: inherit
