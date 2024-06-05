@@ -60,7 +60,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"alexfariakof_EasyCryptoSalt" /o:"alexfariakof" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="**/__mock__/**, **/*Test.cs"  /d:sonar.cs.opencover.reportsPaths="**/coverage.opencover.xml" /d:sonar.cs.lcov.reportPaths="**/coveragereport/lcov.info" 
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"alexfariakof_EasyCryptoSalt" /o:"alexfariakof" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.exclusions="**/__mock__/**, **/*Test.cs"  /d:sonar.cs.opencover.reportsPaths="**/**/**/coverage.opencover.xml"
             dotnet tool install -g dotnet-reportgenerator-globaltool
-            dotnet test .\EasyCryptoSalt.UnitTest\EasyCryptoSalt.UnitTest.csproj /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"          
+            dotnet test .\EasyCryptoSalt.UnitTest\EasyCryptoSalt.UnitTest.csproj --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"          
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
