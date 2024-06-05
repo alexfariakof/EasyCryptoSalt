@@ -74,6 +74,7 @@ jobs:
             dotnet test .\EasyCryptoSalt.UnitTest\EasyCryptoSalt.UnitTest.csproj --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura --collect:"XPlat Code Coverage;Format=opencover"
 
             $projectTestPath = Join-Path -Path (Get-Location) -ChildPath "EasyCryptoSalt.UnitTest"
+            $sourceDirs = Join-Path -Path (Get-Location) -ChildPath "EasyCryptoSalt;"
             $coverageXmlPath = Join-Path -Path (Join-Path -Path $projectTestPath -ChildPath "TestResults") -ChildPath "coveragereport"
             reportgenerator -reports:$projectTestPath\coverage.cobertura.xml -targetdir:$coverageXmlPath -reporttypes:"lcov;" -sourcedirs:$sourceDirs
 
