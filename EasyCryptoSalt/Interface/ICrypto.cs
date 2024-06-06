@@ -19,4 +19,5 @@ public interface ICrypto
     /// <param name="hash">Hash para comparação.</param>
     /// <returns>True se o texto simples gerar o mesmo hash; caso contrário, false.</returns>
     Task<bool> Verify(string plainText, string hash);
+    
 }

@@ -14,6 +14,7 @@ public sealed class Crypto : ICrypto
     private readonly byte[] _authSalt; // SECURE_AUTH_SALT
     private static readonly object LockObject = new object();
     private static ICrypto? _crypto;
+    private static string DEFAULT_FILE = "appsettings.json";
 
     /// <summary>
     /// Instância singleton da classe Crypto.
@@ -27,8 +28,8 @@ public sealed class Crypto : ICrypto
                 if (_crypto == null)
                 {
                     _crypto = new Crypto();
-                }
 
+                }
                 return _crypto;
             }
         }
@@ -39,6 +40,7 @@ public sealed class Crypto : ICrypto
     /// </summary>
     private Crypto()
     {
+
         var key = GetHashKey();
         var keyByte = Encoding.UTF8.GetBytes(key);
         this._key = keyByte;
@@ -65,19 +67,12 @@ public sealed class Crypto : ICrypto
     /// <returns>Chave de hash como string Base64.</returns>
     private static string GetHashKey()
     {
-        try
-        {
-            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-            var jsonContent = File.ReadAllText(jsonFilePath);
-            var config = JsonDocument.Parse(jsonContent);
-            config.RootElement.TryGetProperty("CryptoConfigurations", out var cryptoConfigurations);
-            cryptoConfigurations.TryGetProperty("Key", out var key);
-            return key.GetString() ?? throw new();
-        }
-        catch
-        {
-             throw new ArgumentException("Key not defined.");
-        }
+        var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DEFAULT_FILE);
+        var jsonContent = File.ReadAllText(jsonFilePath);
+        var config = JsonDocument.Parse(jsonContent);
+        if (config.RootElement.TryGetProperty("CryptoConfigurations", out var cryptoConfigurations) && cryptoConfigurations.TryGetProperty("Key", out var key))
+            return key.GetString();
+        throw new ArgumentException("Key not defined.");
     }
 
     /// <summary>
@@ -86,19 +81,12 @@ public sealed class Crypto : ICrypto
     /// <returns>Salt como string.</returns>
     private static string GetAuthSalt()
     {
-        try
-        {
-            var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "appsettings.json");
-            var jsonContent = File.ReadAllText(jsonFilePath);
-            var config = JsonDocument.Parse(jsonContent);
-            config.RootElement.TryGetProperty("CryptoConfigurations", out var cryptoConfigurations);
-            cryptoConfigurations.TryGetProperty("AuthSalt", out var authSalt);
-            return authSalt.GetString() ?? throw new();
-        }
-        catch
-        {
-             throw new ArgumentException("Auth Salt not defined.");
-        }        
+        var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DEFAULT_FILE);
+        var jsonContent = File.ReadAllText(jsonFilePath);
+        var config = JsonDocument.Parse(jsonContent);
+        if (config.RootElement.TryGetProperty("CryptoConfigurations", out var cryptoConfigurations) && cryptoConfigurations.TryGetProperty("AuthSalt", out var authSalt))
+            return authSalt.GetString();
+        throw new ArgumentException("Auth Salt not defined.");
     }
 
     /// <summary>

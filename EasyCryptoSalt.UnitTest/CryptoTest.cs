@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using __mock__;
+using System.Reflection;
+using Moq;
 
 namespace EasyCryptoSalt.UnitTest;
 public sealed class CryptoTest
