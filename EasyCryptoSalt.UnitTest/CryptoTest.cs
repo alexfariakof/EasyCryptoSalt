@@ -177,7 +177,8 @@ public sealed class CryptoTest
         }
         else
         {
-            Assert.Throws<ArgumentNullException>(() => new Crypto(options));
+            var exception = Assert.Throws<ArgumentNullException>(() => new Crypto(options));
+            Assert.Contains("not defined", exception.Message);
         }
     }
 }
