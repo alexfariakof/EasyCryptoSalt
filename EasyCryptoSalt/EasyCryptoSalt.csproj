@@ -11,7 +11,7 @@
 
 	<PropertyGroup>
 		<PackageId>EasyCryptoSalt</PackageId>
-		<Version>1.0.1</Version>
+		<Version>1.1.2</Version>
 		<Authors>Alex Ribeiro de Faria</Authors>
 		<Company>Honey TI</Company>
 		<RepositoryUrl>https://github.com/alexfariakof/EasyCryptoSalt</RepositoryUrl>
