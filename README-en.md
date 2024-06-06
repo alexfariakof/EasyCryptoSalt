@@ -1,28 +1,27 @@
-- `README-en.md`: reamde-en.md
+- `README.md`: reamdme.md
 
 # EasyCryptoSalt
 
-O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptográficas em .NET. Ele oferece funcionalidades para hashing seguro usando o algoritmo SHA-256, juntamente com a capacidade de comparar hashes utilizando uma chave e um salt.
+EasyCryptoSalt is a simple and efficient library for cryptographic operations in .NET. It provides functionalities for secure hashing using the SHA-256 hashing algorithm, along with the ability to compare hashes using a key and a salt.
 
-## Principais Recursos
+## Key Features
 
-* Hashing Seguro: Gere hashes seguros usando o algoritmo de hash SHA-256.
-* Comparação de Hashes: Verifique se o texto simples corresponde ao hash fornecido com facilidade.
-* Segurança Adicional com Salt: Utilize um salt adicional para aumentar a segurança dos hashes gerados.
-* Métodos de encriptaçao e verificação são assíncrono fornecendo escalabilidade e responsividade ao sistema, especialmente em aplicações que realizam operações de I/O ou outras tarefas que podem ser bloqueantes.
+* Secure Hashing: Generate secure hashes using the SHA-256 hash algorithm.
+* Hash Comparison: Easily verify if plain text matches the provided hash.
+* Additional Security with Salt: Use an additional salt to enhance the security of generated hashes.
+* Encryption and verification methods are asynchronous, providing scalability and responsiveness to the system, especially in applications performing I/O operations or other potentially blocking tasks.
 
-## Instalação
+## Installation
 
-Para instalar o pacote NuGet `EasyCryptoSalt`, execute o seguinte comando no console do Gerenciador de Pacotes NuGet:
+To install the NuGet package `EasyCryptoSalt`, execute the following command in the NuGet Package Manager Console:
 
 ```powershell
 Install-Package EasyCryptoSalt
-
 ```
 
-## Configuração
+## Configuration
 
-   Certifique-se de que o arquivo appsettings.json contém a seção CryptoConfigurations com as chaves necessárias:
+Ensure that the appsettings.json file contains the CryptoConfigurations section with the necessary keys:
 
 ```json
 {
@@ -33,18 +32,18 @@ Install-Package EasyCryptoSalt
 }
 ```
 
-## Exemplo de Uso Modo 1
+## Example Usage Mode 2
 
 ```csharp  
 using EasyCryptoSalt;
 
-// Criar uma instância de Crypto
+// Create an instance of Crypto
 var crypto = Crypto.Instance;
 
-// Gerar um hash seguro
+// Generate a secure hash
 string hashedText = crypto.Encrypt("Texto a ser hashado").Result;
 
-// Verificar se um texto simples corresponde a um hash
+// Verify if a plain text matches a hash
 bool isMatch = crypto.Verify("Texto a ser verificado", hashedText).Result;
 ```
 
@@ -74,10 +73,10 @@ public class ExampleClass
 
   public void UseCrypto()
   {
-    // Gerar um hash seguro
+    // Generate a secure hash
     string hashedText = crypto.Encrypt("Texto a ser hashado").Result;
 
-    // Verificar se um texto simples corresponde a um hash
+    // Verify if a plain text matches a hash
     bool isMatch = crypto.Verify("Texto a ser verificado", hashedText).Result;
   }
 }        
@@ -93,22 +92,24 @@ public class CryptoOptions
 }
 ```
 
-## Classe Crypto
+## Crypto Class
 
-### Descrição
+### Description
 
-A classe Crypto é responsável por realizar operações criptográficas, incluindo a geração de hashes com SHA-256 e a comparação de hashes utilizando uma chave e um salt.
+The Crypto class is responsible for performing cryptographic operations, including generating hashes with SHA-256 and comparing hashes using a key and a salt.
 
-### Propriedades
 
-* Instance: Propriedade estática que retorna uma instância singleton da classe Crypto.
+### Properties
 
-### Construtores
+* Instance: A static property that returns a singleton instance of the Crypto class.
 
-* Crypto(): Construtor privado que inicializa a chave e o salt a partir do arquivo de configuração appsettings.json.
-* Crypto(IOptions<CryptoOptions> options): Construtor público que inicializa a chave e o salt a partir das opções fornecidas no arquivo de configuração appsettings.json.
 
-### Métodos
+### Constructors
+
+* Crypto(): Private constructor that initializes the key and salt from the appsettings.json configuration file.
+* Crypto(IOptions<CryptoOptions> options): Public constructor that initializes the key and salt from the provided options in the appsettings.json configuration file.
+
+### Methods
 
 ```csharp
 public async Task<string> Encrypt(string input)
@@ -139,9 +140,9 @@ private byte[] GenerateSalt()
 > * Retorno:
        byte[]: Salt aleatório.
 
-## Observações:
+## Notes:
 
-* Certifique-se de configurar corretamente a chave e o salt no arquivo de configuração appsettings.json para garantir a segurança adequada dos hashes gerados.
+* Ensure to properly configure the key and salt in the appsettings.json file to ensure the proper security of generated hashes.
 
     ```json
     {
@@ -152,4 +153,4 @@ private byte[] GenerateSalt()
     }
     ```
 
-* Esta biblioteca é projetada para ser fácil de usar e oferecer segurança robusta para suas necessidades criptográficas em .NET.
+* This library is designed to be easy to use and offer robust security for your cryptographic needs in .NET.
