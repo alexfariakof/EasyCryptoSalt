@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Options;
-using Newtonsoft.Json.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 
 namespace EasyCryptoSalt;
 
@@ -69,11 +69,14 @@ public sealed class Crypto : ICrypto
         if (File.Exists(jsonFilePath))
         {
             var jsonContent = File.ReadAllText(jsonFilePath);
-            var config = JObject.Parse(jsonContent);
-            var cryptoKey = config["CryptoConfigurations"]?["Key"]?.ToString() ?? throw new ArgumentNullException("Key Auth not defined.");
-            return cryptoKey;
+            var config = JsonDocument.Parse(jsonContent);
+            if (config.RootElement.TryGetProperty("CryptoConfigurations", out var cryptoConfigurations) &&
+                cryptoConfigurations.TryGetProperty("Key", out var key))
+            {
+                return key.GetString() ?? throw new ArgumentNullException("Key Auth not defined.");
+            }
         }
-        throw new ArgumentException("File appsettings.json not found.");
+        throw new ArgumentException("File appsettings.json not found or Key not defined.");
     }
 
     /// <summary>
@@ -86,11 +89,14 @@ public sealed class Crypto : ICrypto
         if (File.Exists(jsonFilePath))
         {
             var jsonContent = File.ReadAllText(jsonFilePath);
-            var config = JObject.Parse(jsonContent);
-            var authSalt = config["CryptoConfigurations"]?["AuthSalt"]?.ToString() ?? throw new ArgumentNullException("Key Auth Salt not defined.");
-            return authSalt;
+            var config = JsonDocument.Parse(jsonContent);
+            if (config.RootElement.TryGetProperty("CryptoConfigurations", out var cryptoConfigurations) &&
+                cryptoConfigurations.TryGetProperty("AuthSalt", out var authSalt))
+            {
+                return authSalt.GetString() ?? throw new ArgumentNullException("Key Auth Salt not defined.");
+            }
         }
-        throw new ArgumentException("File appsettings.json not found.");
+        throw new ArgumentException("File appsettings.json not found or AuthSalt not defined.");
     }
 
     /// <summary>
@@ -125,7 +131,7 @@ public sealed class Crypto : ICrypto
 
     /// <summary>
     /// Verifica se o texto simples fornecido corresponde ao hash fornecido.
-    /// </summary
+    /// </summary>
     /// <param name="plainText">Texto simples a ser verificado.</param>
     /// <param name="hash">Hash para comparação.</param>
     /// <returns>True se o texto simples gerar o mesmo hash; caso contrário, false.</returns>
