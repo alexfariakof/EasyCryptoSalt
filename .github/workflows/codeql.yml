@@ -11,7 +11,15 @@
 #
 name: "CodeQL"
 on:
-  workflow_call:    
+  push:
+    branches: 
+      - main 
+      - develop
+ 
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:       
+      - main
 
   schedule:
     - cron: '43 4 * * 0'

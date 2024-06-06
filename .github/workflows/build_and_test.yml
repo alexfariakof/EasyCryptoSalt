@@ -47,9 +47,3 @@ jobs:
     name: Triggered Test Code In Sonar Cloud
     uses: alexfariakof/EasyCryptoSalt/.github/workflows/test_in_sonar_cloud.yml@main
     secrets: inherit
-
-  trigger_codeql:
-    needs: trigger_tests_sonarcloud
-    name: Triggered CodeQL Test 
-    uses: alexfariakof/EasyCryptoSalt/.github/workflows/codeql.yml@main
-    secrets: inherit
