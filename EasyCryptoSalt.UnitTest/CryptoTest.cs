@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using __mock__;
-using System.Text.Json;
 
 namespace EasyCryptoSalt.UnitTest;
 public sealed class CryptoTest
@@ -163,9 +162,9 @@ public sealed class CryptoTest
     }
 
     [Theory]
-    [InlineData("Ajmnolj1(&1jxçdsu9IQJAÇp)_62LA", "}46aSb$]R|jjTtKGY`", true)]  // Chave válida
-    [InlineData(null, "}46aSb$]R|jjTtKGY`", false)]  // Chave inválida
-    [InlineData("Ajmnolj1(&1jxçdsu9IQJAÇp)_62LA", null, false)]  // Chave inválida
+    [InlineData("Ajmnolj1(&1jxçdsu9IQJAÇp)_62LA", "}46aSb$]R|jjTtKGY`", true)]  // Key e Auth Salt Válidos
+    [InlineData(null, "}46aSb$]R|jjTtKGY`", false)]  // Key inválida
+    [InlineData("Ajmnolj1(&1jxçdsu9IQJAÇp)_62LA", null, false)]  // Auth Salt inválido
     public void ValidateKey_Should_Throw_Exception_For_Invalid_Keys(string key, string authSalt, bool isValid)
     {
         // Arrange
