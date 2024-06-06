@@ -10,11 +10,11 @@ namespace EasyCryptoSalt;
 /// </summary>
 public sealed class Crypto : ICrypto
 {
+    private readonly static string DEFAULT_FILE = "appsettings.json";
     private readonly byte[] _key; // SECURE_AUTH_KEY
     private readonly byte[] _authSalt; // SECURE_AUTH_SALT
     private static readonly object LockObject = new object();
-    private static ICrypto? _crypto;
-    private static string DEFAULT_FILE = "appsettings.json";
+    private static ICrypto? _crypto;    
 
     /// <summary>
     /// Instância singleton da classe Crypto.
@@ -28,7 +28,6 @@ public sealed class Crypto : ICrypto
                 if (_crypto == null)
                 {
                     _crypto = new Crypto();
-
                 }
                 return _crypto;
             }
@@ -65,7 +64,7 @@ public sealed class Crypto : ICrypto
     /// Cria a chave de hash a partir do arquivo de configuração appsettings.json.
     /// </summary>
     /// <returns>Chave de hash como string Base64.</returns>
-    private static string GetHashKey()
+    private static string? GetHashKey()
     {
         var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DEFAULT_FILE);
         var jsonContent = File.ReadAllText(jsonFilePath);
@@ -79,7 +78,7 @@ public sealed class Crypto : ICrypto
     /// Cria o salt a partir do arquivo de configuração appsettings.json.
     /// </summary>
     /// <returns>Salt como string.</returns>
-    private static string GetAuthSalt()
+    private static string? GetAuthSalt()
     {
         var jsonFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DEFAULT_FILE);
         var jsonContent = File.ReadAllText(jsonFilePath);
