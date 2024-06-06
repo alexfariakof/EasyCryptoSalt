@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using __mock__;
+using System.Text.Json;
 
 namespace EasyCryptoSalt.UnitTest;
 public sealed class CryptoTest
@@ -28,11 +29,11 @@ public sealed class CryptoTest
 
         // Act
         string encryptedText = await crypto.Encrypt(originalText);
-        var isEquals = await crypto.Verify(originalText, encryptedText);
+        var verify = await crypto.Verify(originalText, encryptedText);
 
         // Assert
         Assert.NotEqual(originalText, encryptedText);
-        Assert.True(isEquals);
+        Assert.True(verify);
     }
 
     [Fact]
@@ -44,11 +45,11 @@ public sealed class CryptoTest
 
         // Act
         string encryptedText = await crypto.Encrypt(originalText);
-        var isEquals = await crypto.Verify(originalText, encryptedText);
+        var verify = await crypto.Verify(originalText, encryptedText);
 
         // Assert
         Assert.NotEqual(originalText, encryptedText);
-        Assert.True(isEquals);
+        Assert.True(verify);
     }
 
     [Fact]
@@ -90,10 +91,10 @@ public sealed class CryptoTest
 
         // Act
         string encryptedText = await crypto.Encrypt(originalText);
-        var isEquals = await crypto.Verify(originalText, encryptedText);
+        var verify = await crypto.Verify(originalText, encryptedText);
 
         // Assert
-        Assert.True(isEquals);
+        Assert.True(verify);
     }
 
     [Fact]
@@ -105,10 +106,10 @@ public sealed class CryptoTest
 
         // Act
         string encryptedText = await crypto.Encrypt(originalText);
-        var isEquals = await crypto.Verify(originalText, encryptedText);
+        var verify = await crypto.Verify(originalText, encryptedText);
 
         // Assert
-        Assert.True(isEquals);
+        Assert.True(verify);
     }
 
     [Fact]
@@ -121,16 +122,16 @@ public sealed class CryptoTest
 
         // Act
         string encryptedTextInstance = await crypto.Encrypt(originalText);
-        var isEquals = await crypto.Verify(originalText, encryptedTextInstance);
-        var isEqualsOptions = await cryptoOptions.Verify(originalText, encryptedTextInstance);
+        var verify = await crypto.Verify(originalText, encryptedTextInstance);
+        var verifyOptions = await cryptoOptions.Verify(originalText, encryptedTextInstance);
 
         // Assert
-        Assert.True(isEquals);
-        Assert.True(isEqualsOptions);
+        Assert.True(verify);
+        Assert.True(verifyOptions);
     }
 
     [Fact]
-    public async Task Encrypt_And_IsEquals_Should_Handle_Empty_Input()
+    public async Task Encrypt_And_Verify_Should_Handle_Empty_Input()
     {
         // Arrange
         string originalText = "";
@@ -138,15 +139,15 @@ public sealed class CryptoTest
 
         // Act
         string encryptedText = await crypto.Encrypt(originalText);
-        var isEquals = await crypto.Verify(originalText, encryptedText);
+        var verify = await crypto.Verify(originalText, encryptedText);
 
         // Assert
         Assert.NotEqual(originalText, encryptedText);
-        Assert.True(isEquals);
+        Assert.True(verify);
     }
 
     [Fact]
-    public async Task Encrypt_And_IsEquals_Should_Handle_Empty_Input_With_Options_Instance()
+    public async Task Encrypt_And_Verify_Should_Handle_Empty_Input_With_Options_Instance()
     {
         // Arrange
         string originalText = "";
@@ -154,11 +155,11 @@ public sealed class CryptoTest
 
         // Act
         string encryptedText = await crypto.Encrypt(originalText);
-        var isEquals = await crypto.Verify(originalText, encryptedText);
+        var verify = await crypto.Verify(originalText, encryptedText);
 
         // Assert
         Assert.NotEqual(originalText, encryptedText);
-        Assert.True(isEquals);
+        Assert.True(verify);
     }
 
     [Theory]
@@ -179,5 +180,63 @@ public sealed class CryptoTest
         {
             Assert.Throws<ArgumentNullException>(() => new Crypto(options));
         }
+    }
+
+    [Fact]
+    public void Constructor_Should_Throw_Exception_When_Key_Not_Defined()
+    {
+        // Arrange
+        var invalidOptions = Options.Create(new CryptoOptions() { Key = null, AuthSalt = "someSalt" });
+
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentNullException>(() => new Crypto(invalidOptions));
+        Assert.Equal("Key Auth not defined.", exception.ParamName);
+    }
+
+    [Fact]
+    public void Constructor_Should_Throw_Exception_When_AuthSalt_Not_Defined()
+    {
+        // Arrange
+        var invalidOptions = Options.Create(new CryptoOptions() { Key = "someKey", AuthSalt = null });
+
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentNullException>(() => new Crypto(invalidOptions));
+        Assert.Equal("Key Auth Salt not defined.", exception.ParamName);
+    }
+
+    [Fact]
+    public void GetHashKey_Should_Throw_Exception_When_Key_Not_Defined()
+    {
+        // Arrange
+        var invalidConfiguration = new ConfigurationBuilder()
+                                   .SetBasePath(Directory.GetCurrentDirectory())
+                                   .AddInMemoryCollection(new Dictionary<string, string?>
+                                   {
+                                       { "CryptoConfigurations:Key", null },
+                                       { "CryptoConfigurations:AuthSalt", "someSalt" }
+                                   })
+                                   .Build();
+
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentNullException>(() => new Crypto(Options.Create(invalidConfiguration.GetSection("CryptoConfigurations").Get<CryptoOptions>())));
+        Assert.Equal("Key Auth not defined.", exception.ParamName);
+    }
+
+    [Fact]
+    public void GetAuthSalt_Should_Throw_Exception_When_AuthSalt_Not_Defined()
+    {
+        // Arrange
+        var invalidConfiguration = new ConfigurationBuilder()
+                                   .SetBasePath(Directory.GetCurrentDirectory())
+                                   .AddInMemoryCollection(new Dictionary<string, string?>
+                                   {
+                                           { "CryptoConfigurations:Key", "someKey" },
+                                           { "CryptoConfigurations:AuthSalt", null }
+                                   })
+                                   .Build();
+
+        // Act & Assert
+        var exception = Assert.Throws<ArgumentNullException>(() => new Crypto(Options.Create(invalidConfiguration.GetSection("CryptoConfigurations").Get<CryptoOptions>())));
+        Assert.Equal("Key Auth Salt not defined.", exception.ParamName);
     }
 }
