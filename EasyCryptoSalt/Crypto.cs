@@ -72,7 +72,7 @@ public sealed class Crypto : ICrypto
             var config = JsonDocument.Parse(jsonContent);
             config.RootElement.TryGetProperty("CryptoConfigurations", out var cryptoConfigurations);
             cryptoConfigurations.TryGetProperty("Key", out var key);
-            return key.GetString();
+            return key.GetString() ?? throw new();
         }
         catch
         {
@@ -93,7 +93,7 @@ public sealed class Crypto : ICrypto
             var config = JsonDocument.Parse(jsonContent);
             config.RootElement.TryGetProperty("CryptoConfigurations", out var cryptoConfigurations);
             cryptoConfigurations.TryGetProperty("AuthSalt", out var authSalt);
-            return authSalt.GetString();
+            return authSalt.GetString() ?? throw new();
         }
         catch
         {
