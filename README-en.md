@@ -1,4 +1,4 @@
-[Readme em português](https://github.com/alexfariakof/EasyCryptoSalt/blob/main/README.md)
+[Leia esta página em português](https://github.com/alexfariakof/EasyCryptoSalt/blob/main/README.md)
 
 # EasyCryptoSalt
 
