@@ -1,4 +1,4 @@
-- `README-en.md`: reamde-en.md
+[Read this page in English](https://github.com/alexfariakof/EasyCryptoSalt/blob/main/README-en.md)
 
 # EasyCryptoSalt
 
