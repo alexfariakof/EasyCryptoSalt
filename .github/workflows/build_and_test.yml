@@ -9,9 +9,6 @@ on:
     types: [opened, synchronize, reopened]
     branches:       
       - main
-
-permissions:
-    contents: read 
 jobs:
   build_and_test_net:
     name: Build and Test .Net App
