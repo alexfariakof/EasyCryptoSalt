@@ -52,10 +52,10 @@ public sealed class Crypto : ICrypto
     /// <param name="options">Opções de configuração para Crypto.</param>
     public Crypto(IOptions<CryptoOptions> options)
     {
-        var key = options.Value.Key ?? throw new ArgumentNullException("Key not defined.");
+        var key = options.Value.Key ?? throw new ArgumentException("Key not defined.");
         var keyByte = Encoding.UTF8.GetBytes(key);
         this._key = keyByte;
-        var authSalt = options.Value.AuthSalt ?? throw new ArgumentNullException("Auth Salt not defined.");
+        var authSalt = options.Value.AuthSalt ?? throw new ArgumentException("Auth Salt not defined.");
         this._authSalt = Encoding.UTF8.GetBytes(authSalt);
     }
 
