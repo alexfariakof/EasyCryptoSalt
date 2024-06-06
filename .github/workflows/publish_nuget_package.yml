@@ -33,5 +33,5 @@ jobs:
 
     - name: Build and Restore App 
       run: |
-        dotnet nuget add source --username ${{ secrets.USERNAME }} --password ${{ secrets.GITHUB_TOKEN }} --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ secrets.NAMESPACE  }}/index.json"
+        dotnet nuget add source  --username ${{ secrets.USERNAME }}   --password ${{ secrets.GITHUB_TOKEN }}  --store-password-in-clear-text --name github "https://nuget.pkg.github.com/${{ secrets.NAMESPACE  }}/index.json"
       continue-on-error: false
