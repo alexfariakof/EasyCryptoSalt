@@ -20,99 +20,99 @@ public sealed class CryptoTest
     }
 
     [Fact]
-    public void Encrypt_And_Decrypt_Should_Work_With_Instance()
+    public async Task Encrypt_And_Decrypt_Should_Work_With_Instance()
     {
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
         ICrypto crypto = Crypto.Instance;
 
         // Act
-        string encryptedText = crypto.Encrypt(originalText);
-        var isEquals = crypto.Verify(originalText, encryptedText);
+        string encryptedText = await crypto.Encrypt(originalText);
+        var verify = await crypto.Verify(originalText, encryptedText);
 
         // Assert
         Assert.NotEqual(originalText, encryptedText);
-        Assert.True(isEquals);
+        Assert.True(verify);
     }
 
     [Fact]
-    public void Encrypt_And_Decrypt_Should_Work_With_Options_Instance()
+    public async Task Encrypt_And_Decrypt_Should_Work_With_Options_Instance()
     {
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
         ICrypto crypto = new Crypto(_cryptoOptions);
 
         // Act
-        string encryptedText = crypto.Encrypt(originalText);
-        var isEquals = crypto.Verify(originalText, encryptedText);
+        string encryptedText = await crypto.Encrypt(originalText);
+        var verify = await crypto.Verify(originalText, encryptedText);
 
         // Assert
         Assert.NotEqual(originalText, encryptedText);
-        Assert.True(isEquals);
+        Assert.True(verify);
     }
 
     [Fact]
-    public void Encrypt_Should_Produce_Different_Output_For_Same_Input()
+    public async Task Encrypt_Should_Produce_Different_Output_For_Same_Input()
     {
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
         ICrypto crypto = Crypto.Instance;
 
         // Act
-        string encryptedText1 = crypto.Encrypt(originalText);
-        string encryptedText2 = crypto.Encrypt(originalText);
+        string encryptedText1 = await crypto.Encrypt(originalText);
+        string encryptedText2 = await crypto.Encrypt(originalText);
 
         // Assert
         Assert.NotEqual(encryptedText1, encryptedText2);
     }
 
     [Fact]
-    public void Encrypt_Should_Produce_Different_Output_For_Same_Input_With_Options_Instance()
+    public async Task Encrypt_Should_Produce_Different_Output_For_Same_Input_With_Options_Instance()
     {
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
         ICrypto crypto = new Crypto(_cryptoOptions);
 
         // Act
-        string encryptedText1 = crypto.Encrypt(originalText);
-        string encryptedText2 = crypto.Encrypt(originalText);
+        string encryptedText1 = await crypto.Encrypt(originalText);
+        string encryptedText2 = await crypto.Encrypt(originalText);
 
         // Assert
         Assert.NotEqual(encryptedText1, encryptedText2);
     }
 
     [Fact]
-    public void Encrypt_Should_Produce_Valid_Hash_With_Salt()
+    public async Task Encrypt_Should_Produce_Valid_Hash_With_Salt()
     {
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
         ICrypto crypto = Crypto.Instance;
 
         // Act
-        string encryptedText = crypto.Encrypt(originalText);
-        var isEquals = crypto.Verify(originalText, encryptedText);
+        string encryptedText = await crypto.Encrypt(originalText);
+        var verify = await crypto.Verify(originalText, encryptedText);
 
         // Assert
-        Assert.True(isEquals);
+        Assert.True(verify);
     }
 
     [Fact]
-    public void Encrypt_Should_Produce_Valid_Hash_With_Salt_With_Options_Instance()
+    public async Task Encrypt_Should_Produce_Valid_Hash_With_Salt_With_Options_Instance()
     {
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
         ICrypto crypto = new Crypto(_cryptoOptions);
 
         // Act
-        string encryptedText = crypto.Encrypt(originalText);
-        var isEquals = crypto.Verify(originalText, encryptedText);
+        string encryptedText = await crypto.Encrypt(originalText);
+        var verify = await crypto.Verify(originalText, encryptedText);
 
         // Assert
-        Assert.True(isEquals);
+        Assert.True(verify);
     }
 
     [Fact]
-    public void Encrypt_Should_Produce_Valid_Hash_With_Salt_With_Instance_and_Options_Instance()
+    public async Task Encrypt_Should_Produce_Valid_Hash_With_Salt_With_Instance_and_Options_Instance()
     {
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
@@ -120,52 +120,51 @@ public sealed class CryptoTest
         ICrypto cryptoOptions = new Crypto(_cryptoOptions);
 
         // Act
-        string encryptedTextInstance = crypto.Encrypt(originalText);
-
-        var isEquals = crypto.Verify(originalText, encryptedTextInstance);
-        var isEqualsOptions = cryptoOptions.Verify(originalText, encryptedTextInstance);
+        string encryptedTextInstance = await crypto.Encrypt(originalText);
+        var verify = await crypto.Verify(originalText, encryptedTextInstance);
+        var verifyOptions = await cryptoOptions.Verify(originalText, encryptedTextInstance);
 
         // Assert
-        Assert.True(isEquals);
-        Assert.True(isEqualsOptions);
+        Assert.True(verify);
+        Assert.True(verifyOptions);
     }
 
     [Fact]
-    public void Encrypt_And_IsEquals_Should_Handle_Empty_Input()
+    public async Task Encrypt_And_Verify_Should_Handle_Empty_Input()
     {
         // Arrange
         string originalText = "";
         ICrypto crypto = Crypto.Instance;
 
         // Act
-        string encryptedText = crypto.Encrypt(originalText);
-        var isEquals = crypto.Verify(originalText, encryptedText);
+        string encryptedText = await crypto.Encrypt(originalText);
+        var verify = await crypto.Verify(originalText, encryptedText);
 
         // Assert
         Assert.NotEqual(originalText, encryptedText);
-        Assert.True(isEquals);
+        Assert.True(verify);
     }
 
     [Fact]
-    public void Encrypt_And_IsEquals_Should_Handle_Empty_Input_With_Options_Instance()
+    public async Task Encrypt_And_Verify_Should_Handle_Empty_Input_With_Options_Instance()
     {
         // Arrange
         string originalText = "";
         ICrypto crypto = new Crypto(_cryptoOptions);
 
         // Act
-        string encryptedText = crypto.Encrypt(originalText);
-        var isEquals = crypto.Verify(originalText, encryptedText);
+        string encryptedText = await crypto.Encrypt(originalText);
+        var verify = await crypto.Verify(originalText, encryptedText);
 
         // Assert
         Assert.NotEqual(originalText, encryptedText);
-        Assert.True(isEquals);
+        Assert.True(verify);
     }
 
     [Theory]
-    [InlineData("Ajmnolj1(&1jxçdsu9IQJAÇp)_62LA", "}46aSb$]R|jjTtKGY`", true)]  // Chave válida
-    [InlineData(null, "}46aSb$]R|jjTtKGY`", false)]  // Chave inválida
-    [InlineData("Ajmnolj1(&1jxçdsu9IQJAÇp)_62LA", null, false)]  // Chave inválida
+    [InlineData("Ajmnolj1(&1jxçdsu9IQJAÇp)_62LA", "}46aSb$]R|jjTtKGY`", true)]  // Key e Auth Salt Válidos
+    [InlineData(null, "}46aSb$]R|jjTtKGY`", false)]  // Key inválida
+    [InlineData("Ajmnolj1(&1jxçdsu9IQJAÇp)_62LA", null, false)]  // Auth Salt inválido
     public void ValidateKey_Should_Throw_Exception_For_Invalid_Keys(string key, string authSalt, bool isValid)
     {
         // Arrange
@@ -178,7 +177,8 @@ public sealed class CryptoTest
         }
         else
         {
-            Assert.Throws<ArgumentNullException>(() => new Crypto(options));
+            var exception = Assert.Throws<ArgumentException>(() => new Crypto(options));
+            Assert.Contains("not defined", exception.Message);
         }
     }
 }

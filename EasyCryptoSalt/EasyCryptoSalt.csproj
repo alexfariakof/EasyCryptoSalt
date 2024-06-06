@@ -7,13 +7,8 @@
 
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Options" Version="8.0.2" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-		<PackageReference Include="NuGet.CommandLine" Version="6.10.0">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
 	</ItemGroup>
-	
+
 	<PropertyGroup>
 		<PackageId>EasyCryptoSalt</PackageId>
 		<Version>1.0.1</Version>
@@ -21,12 +16,12 @@
 		<Company>Honey TI</Company>
 		<RepositoryUrl>https://github.com/alexfariakof/EasyCryptoSalt</RepositoryUrl>
 	</PropertyGroup>
-	
+
 	<PropertyGroup>
 		<TargetFrameworks>net8.0</TargetFrameworks>
 		<PackageLicenseFile>MIT</PackageLicenseFile>
 	</PropertyGroup>
-	
+
 	<PropertyGroup>
 		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
