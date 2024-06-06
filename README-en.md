@@ -1,4 +1,4 @@
-- `README.md`: reamdme.md
+[Readme em português](https://github.com/alexfariakof/EasyCryptoSalt/blob/main/README.md)
 
 # EasyCryptoSalt
 
@@ -114,31 +114,29 @@ The Crypto class is responsible for performing cryptographic operations, includi
 ```csharp
 public async Task<string> Encrypt(string input)
 ```
-
-> * Descrição: Gera um hash com salt para o input fornecido.
-> * Parâmetros:
-> input (string): Texto a ser hashado.
-> * Retorno:
-> string: Hash com salt em formato Base64.
+> * Description: Generates a hash with salt for the provided input.
+> * Parameters:
+> input (string): Text to be hashed.
+> * Returns:
+> string: Hash with salt in Base64 format.
 
 ```csharp
 public async Task<bool> Verify(string plainText, string hash)
 ```
-
-> * Descrição: Verifica se o texto simples fornecido corresponde ao hash fornecido.
-> * Parâmetros:
-      plainText (string): Texto simples a ser verificado.
-      hash (string): Hash para comparação.
-> * Retorno:
-      bool: Retorna true se o texto simples gerar o mesmo hash; caso contrário, false.
+> * Description: Verifies if the provided plain text matches the provided hash.
+> * Parameters:
+     plainText (string): Plain text to be verified.
+     hash (string): Hash for comparison.
+> * Returns:
+    bool: Returns true if the plain text generates the same hash; otherwise, false.
 
 ```csharp
 private byte[] GenerateSalt()
 ```
 
-> * Descrição: Gera um salt aleatório baseado na chave Auth Salt definida em appsettings.json.
-> * Retorno:
-       byte[]: Salt aleatório.
+> * Description: Generates a random salt based on the Auth Salt key defined in appsettings.json.
+> * Returns:
+    byte[]: Random salt.
 
 ## Notes:
 
