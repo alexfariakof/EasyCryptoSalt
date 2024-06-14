@@ -42,10 +42,10 @@ using EasyCryptoSalt;
 var crypto = Crypto.Instance;
 
 // Gerar um hash seguro
-string hashedText = crypto.Encrypt("Texto a ser hashado").Result;
+string hashedText = crypto.Encrypt("Texto a ser hashado");
 
 // Verificar se um texto simples corresponde a um hash
-bool isMatch = crypto.Verify("Texto a ser verificado", hashedText).Result;
+bool isMatch = crypto.Verify("Texto a ser verificado", hashedText);
 ```
 
 ## Exemplo de Uso Modo 2
@@ -75,10 +75,10 @@ public class ExampleClass
   public void UseCrypto()
   {
     // Gerar um hash seguro
-    string hashedText = crypto.Encrypt("Texto a ser hashado").Result;
+    string hashedText = crypto.Encrypt("Texto a ser hashado");
 
     // Verificar se um texto simples corresponde a um hash
-    bool isMatch = crypto.Verify("Texto a ser verificado", hashedText).Result;
+    bool isMatch = crypto.Verify("Texto a ser verificado", hashedText);
   }
 }        
 ```
