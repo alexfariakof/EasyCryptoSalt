@@ -1,21 +1,22 @@
+[Read this page in English](https://github.com/alexfariakof/EasyCryptoSalt/blob/main/README-en.md)
+
 # EasyCryptoSalt
 
 O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptográficas em .NET. Ele oferece funcionalidades para hashing seguro usando o algoritmo SHA-256, juntamente com a capacidade de comparar hashes utilizando uma chave e um salt.
 
 ## Principais Recursos
 
+* Esta versão utiliza .NET Standard 2.0, tornando-o reutilizável em várias plataformas .NET.
 * Hashing Seguro: Gere hashes seguros usando o algoritmo de hash SHA-256.
 * Comparação de Hashes: Verifique se o texto simples corresponde ao hash fornecido com facilidade.
 * Segurança Adicional com Salt: Utilize um salt adicional para aumentar a segurança dos hashes gerados.
-* Métodos de encriptaçao e verificação são assíncrono fornecendo escalabilidade e responsividade ao sistema, especialmente em aplicações que realizam operações de I/O ou outras tarefas que podem ser bloqueantes.
 
 ## Instalação
 
 Para instalar o pacote NuGet `EasyCryptoSalt`, execute o seguinte comando no console do Gerenciador de Pacotes NuGet:
 
 ```powershell
-Install-Package EasyCryptoSalt
-
+  dotnet add package EasyCryptoSalt --version 1.0.2
 ```
 
 ## Configuração
@@ -40,10 +41,10 @@ using EasyCryptoSalt;
 var crypto = Crypto.Instance;
 
 // Gerar um hash seguro
-string hashedText = crypto.Encrypt("Texto a ser hashado").Result;
+string hashedText = crypto.Encrypt("Texto a ser hashado");
 
 // Verificar se um texto simples corresponde a um hash
-bool isMatch = crypto.Verify("Texto a ser verificado", hashedText).Result;
+bool isMatch = crypto.Verify("Texto a ser verificado", hashedText);
 ```
 
 ## Exemplo de Uso Modo 2
@@ -73,10 +74,10 @@ public class ExampleClass
   public void UseCrypto()
   {
     // Gerar um hash seguro
-    string hashedText = crypto.Encrypt("Texto a ser hashado").Result;
+    string hashedText = crypto.Encrypt("Texto a ser hashado");
 
     // Verificar se um texto simples corresponde a um hash
-    bool isMatch = crypto.Verify("Texto a ser verificado", hashedText).Result;
+    bool isMatch = crypto.Verify("Texto a ser verificado", hashedText);
   }
 }        
 ```
