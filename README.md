@@ -110,7 +110,7 @@ A classe Crypto é responsável por realizar operações criptográficas, inclui
 ### Métodos
 
 ```csharp
-public async Task<string> Encrypt(string input)
+public string Encrypt(string input)
 ```
 
 > * Descrição: Gera um hash com salt para o input fornecido.
@@ -120,7 +120,7 @@ public async Task<string> Encrypt(string input)
 > string: Hash com salt em formato Base64.
 
 ```csharp
-public async Task<bool> Verify(string plainText, string hash)
+public bool Verify(string plainText, string hash)
 ```
 
 > * Descrição: Verifica se o texto simples fornecido corresponde ao hash fornecido.
