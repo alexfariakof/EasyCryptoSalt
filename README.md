@@ -6,18 +6,17 @@ O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptogr
 
 ## Principais Recursos
 
+* Esta versão utiliza .NET Standard 2.0, tornando-o reutilizável em várias plataformas .NET.
 * Hashing Seguro: Gere hashes seguros usando o algoritmo de hash SHA-256.
 * Comparação de Hashes: Verifique se o texto simples corresponde ao hash fornecido com facilidade.
 * Segurança Adicional com Salt: Utilize um salt adicional para aumentar a segurança dos hashes gerados.
-* Métodos de encriptaçao e verificação são assíncrono fornecendo escalabilidade e responsividade ao sistema, especialmente em aplicações que realizam operações de I/O ou outras tarefas que podem ser bloqueantes.
 
 ## Instalação
 
 Para instalar o pacote NuGet `EasyCryptoSalt`, execute o seguinte comando no console do Gerenciador de Pacotes NuGet:
 
 ```powershell
-Install-Package EasyCryptoSalt
-
+  dotnet add package EasyCryptoSalt --version 1.0.2
 ```
 
 ## Configuração
