@@ -40,7 +40,7 @@ public sealed class CryptoTest
     {
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
-        ICrypto crypto = new Crypto(_cryptoOptions);
+        var crypto = new Crypto(_cryptoOptions);
 
         // Act
         string encryptedText = crypto.Encrypt(originalText);
@@ -56,7 +56,7 @@ public sealed class CryptoTest
     {
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
-        ICrypto crypto = Crypto.Instance;
+        var crypto = Crypto.Instance;
 
         // Act
         string encryptedText1 = crypto.Encrypt(originalText);
@@ -71,7 +71,7 @@ public sealed class CryptoTest
     {
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
-        ICrypto crypto = new Crypto(_cryptoOptions);
+        var crypto = new Crypto(_cryptoOptions);
 
         // Act
         string encryptedText1 = crypto.Encrypt(originalText);
@@ -86,7 +86,7 @@ public sealed class CryptoTest
     {
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
-        ICrypto crypto = Crypto.Instance;
+        var crypto = Crypto.Instance;
 
         // Act
         string encryptedText = crypto.Encrypt(originalText);
@@ -101,7 +101,7 @@ public sealed class CryptoTest
     {
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
-        ICrypto crypto = new Crypto(_cryptoOptions);
+        var crypto = new Crypto(_cryptoOptions);
 
         // Act
         string encryptedText = crypto.Encrypt(originalText);
@@ -117,7 +117,7 @@ public sealed class CryptoTest
         // Arrange
         string originalText = MockCrypto.Instance.GetNewPlainText();
         ICrypto crypto = Crypto.Instance;
-        ICrypto cryptoOptions = new Crypto(_cryptoOptions);
+        var cryptoOptions = new Crypto(_cryptoOptions);
 
         // Act
         string encryptedTextInstance = crypto.Encrypt(originalText);
@@ -150,7 +150,7 @@ public sealed class CryptoTest
     {
         // Arrange
         string originalText = "";
-        ICrypto crypto = new Crypto(_cryptoOptions);
+        var crypto = new Crypto(_cryptoOptions);
 
         // Act
         string encryptedText = crypto.Encrypt(originalText);
