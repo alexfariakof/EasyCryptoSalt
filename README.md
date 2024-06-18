@@ -16,7 +16,7 @@ O EasyCryptoSalt é uma biblioteca simples e eficiente para operações criptogr
 Para instalar o pacote NuGet `EasyCryptoSalt`, execute o seguinte comando no console do Gerenciador de Pacotes NuGet:
 
 ```powershell
-  dotnet add package EasyCryptoSalt --version 1.0.2
+  dotnet add package EasyCryptoSalt --version 1.0.3
 ```
 
 ## Configuração

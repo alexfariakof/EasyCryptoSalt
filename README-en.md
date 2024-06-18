@@ -6,17 +6,17 @@ EasyCryptoSalt is a simple and efficient library for cryptographic operations in
 
 ## Key Features
 
+* This version uses .NET Standard 2.0, making it reusable across various .NET platforms.
 * Secure Hashing: Generate secure hashes using the SHA-256 hash algorithm.
 * Hash Comparison: Easily verify if plain text matches the provided hash.
 * Additional Security with Salt: Use an additional salt to enhance the security of generated hashes.
-* Encryption and verification methods are asynchronous, providing scalability and responsiveness to the system, especially in applications performing I/O operations or other potentially blocking tasks.
 
 ## Installation
 
 To install the NuGet package `EasyCryptoSalt`, execute the following command in the NuGet Package Manager Console:
 
 ```powershell
-Install-Package EasyCryptoSalt
+  dotnet add package EasyCryptoSalt --version 1.0.3
 ```
 
 ## Configuration
@@ -41,10 +41,10 @@ using EasyCryptoSalt;
 var crypto = Crypto.Instance;
 
 // Generate a secure hash
-string hashedText = crypto.Encrypt("Texto a ser hashado").Result;
+string hashedText = crypto.Encrypt("Texto a ser hashado");
 
 // Verify if a plain text matches a hash
-bool isMatch = crypto.Verify("Texto a ser verificado", hashedText).Result;
+bool isMatch = crypto.Verify("Texto a ser verificado", hashedText);
 ```
 
 ## Exemplo de Uso Modo 2
@@ -74,10 +74,10 @@ public class ExampleClass
   public void UseCrypto()
   {
     // Generate a secure hash
-    string hashedText = crypto.Encrypt("Texto a ser hashado").Result;
+    string hashedText = crypto.Encrypt("Texto a ser hashado");
 
     // Verify if a plain text matches a hash
-    bool isMatch = crypto.Verify("Texto a ser verificado", hashedText).Result;
+    bool isMatch = crypto.Verify("Texto a ser verificado", hashedText);
   }
 }        
 ```
@@ -112,7 +112,7 @@ The Crypto class is responsible for performing cryptographic operations, includi
 ### Methods
 
 ```csharp
-public async Task<string> Encrypt(string input)
+public string Encrypt(string input)
 ```
 > * Description: Generates a hash with salt for the provided input.
 > * Parameters:
@@ -121,7 +121,7 @@ public async Task<string> Encrypt(string input)
 > string: Hash with salt in Base64 format.
 
 ```csharp
-public async Task<bool> Verify(string plainText, string hash)
+public bool Verify(string plainText, string hash)
 ```
 > * Description: Verifies if the provided plain text matches the provided hash.
 > * Parameters:

@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /EasyCryptoSalt.nuspec
 /EasyCryptoSalt/nuget.config
+nuget.config
